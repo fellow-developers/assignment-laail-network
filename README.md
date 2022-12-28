@@ -24,6 +24,11 @@ git clone git@github.com:fellow-developers/assignment-laail-network.git
 cd assignment-laail-network
 ```
 
+- Open project in VS Code
+```bash
+code .
+```
+
 - Install dependencies
 ```bash
 npm install
