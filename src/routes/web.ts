@@ -1,6 +1,6 @@
 import express from "express";
 import { getUser, createUser } from "../controllers/usersControllers";
-import { createContracts } from "../controllers/contractsControllers";
+import { getContracts, createContracts } from "../controllers/contractsControllers";
 
 const router = express.Router();
 
@@ -8,6 +8,8 @@ const router = express.Router();
 router.get("/users", getUser);
 // @ts-ignore
 router.post("/users", createUser);
+// @ts-ignore
+router.get("/contracts/:n", getContracts)
 // @ts-ignore
 router.post("/contracts", createContracts);
 

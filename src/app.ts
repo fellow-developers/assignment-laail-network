@@ -5,7 +5,7 @@ import web from './routes/web';
 const app = express();
 const port = 3000;
 
-// JSON
+// JSON middleware
 app.use(express.json());
 
 // Routes
