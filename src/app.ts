@@ -1,17 +1,25 @@
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 import express from 'express';
-import { connectDB } from './db/connectdb';
+import mongoose from 'mongoose';
 import web from './routes/web';
+import { connectDB } from './db/connectdb';
+
+// Load environment variables from .env file
+dotenv.config();
+const PORT = process.env.PORT!;
+const DATABASE_URL = process.env.DATABASE_URL!;
+const DB_NAME = process.env.DB_NAME!;
 
 
+// Create a new express application instance
 const app = express();
-const PORT = 3000;
-const DATABASE_URL = "mongodb://localhost:27017";
 
 // JSON middleware
 app.use(express.json());
 
 // Connect to database
-connectDB(DATABASE_URL);
+mongoose.set('strictQuery', true); // https://mongoosejs.com/docs/guide.html#strictQuery
+connectDB(DATABASE_URL, DB_NAME);
 
 // Routes
 app.use("/api", web);

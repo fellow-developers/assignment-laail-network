@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-export const connectDB = async (DATABASE_URL: string) => {
+export const connectDB = async (DATABASE_URL: string, DB_NAME: string) => {
     try {
         const DB_OPTIONS = {
-            dbName: "laali",
+            dbName: DB_NAME,
         }
 
         await mongoose.connect(DATABASE_URL, DB_OPTIONS);

@@ -34,6 +34,18 @@ code .
 npm install
 ```
 
+- Create .env file
+```bash
+touch .env
+```
+
+- Add environment variables
+```text
+PORT=3000
+DATABASE_URL=mongodb://localhost:27017
+DB_NAME=laail
+```
+
 - Build project
 ```bash
 npm run build
