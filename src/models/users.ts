@@ -30,4 +30,5 @@ const UserSchema = new Schema({
 });
 
 
+// Export the User model
 export const UserModel = model("user", UserSchema);
