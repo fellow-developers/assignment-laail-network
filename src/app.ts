@@ -1,21 +1,21 @@
 import express from 'express';
+import { connectDB } from './db/connectdb';
 import web from './routes/web';
-import mongoose from 'mongoose';
 
 
 const app = express();
 const PORT = 3000;
-const DATABASE_URL = "mongodb://localhost:27017/local";
+const DATABASE_URL = "mongodb://localhost:27017";
 
 // JSON middleware
 app.use(express.json());
 
+// Connect to database
+connectDB(DATABASE_URL);
+
 // Routes
 app.use("/api", web);
 
-
-// Connect to database
-mongoose.connect(DATABASE_URL, { dbName: "laail" });
 
 // Start the server
 app.listen(PORT, () => {
