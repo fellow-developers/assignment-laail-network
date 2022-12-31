@@ -23,7 +23,7 @@ const UserSchema = new Schema({
         required: true,
         // type is either lander or borrower
         enum: {
-            values: ['lander', 'borrower'],
+            values: ['lender', 'borrower'],
             message: 'Type is either: lander or borrower'
         },
     },
