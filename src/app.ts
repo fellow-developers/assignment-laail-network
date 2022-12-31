@@ -8,7 +8,10 @@ import { connectDB } from './db/connectdb';
 dotenv.config();
 const PORT = process.env.PORT!;
 const DATABASE_URL = process.env.DATABASE_URL!;
-const DB_NAME = process.env.DB_NAME!;
+const DATABASE_NAME = process.env.DATABASE_NAME!;
+const DATABASE_USER = process.env.DATABASE_USER!;
+const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD!;
+const DATABASE_AUTH_SOURCE = process.env.DATABASE_AUTH_SOURCE!;
 
 
 // Create a new express application instance
@@ -19,7 +22,13 @@ app.use(express.json());
 
 // Connect to database
 mongoose.set('strictQuery', true); // https://mongoosejs.com/docs/guide.html#strictQuery
-connectDB(DATABASE_URL, DB_NAME);
+const DB_OPTIONS: mongoose.ConnectOptions = {
+    user: DATABASE_USER,
+    pass: DATABASE_PASSWORD,
+    dbName: DATABASE_NAME,
+    authSource: DATABASE_AUTH_SOURCE,
+}
+connectDB(DATABASE_URL, DB_OPTIONS);
 
 // Routes
 app.use("/api", web);
