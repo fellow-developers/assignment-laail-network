@@ -1,5 +1,10 @@
 import { model, Schema } from "mongoose";
 
+export enum ContractStatus {
+    Active = "active",
+    Completed = "completed",
+}
+
 // Define the Contract schema
 const ContractSchema = new Schema({
     lender: {
@@ -27,10 +32,7 @@ const ContractSchema = new Schema({
     status: {
         type: String,
         required: true,
-        enum: {
-            values: ['active', 'completed'],
-            message: 'Status is either: active or completed'
-        },
+        enum: ContractStatus
     },
     createdAt: {
         type: Date,

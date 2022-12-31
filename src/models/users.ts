@@ -1,5 +1,10 @@
 import { model, Schema } from "mongoose";
 
+export enum UserType {
+    Lender = "lender",
+    Borrower = "borrower",
+}
+
 // Define the User schema
 const UserSchema = new Schema({
     name: {
@@ -21,11 +26,7 @@ const UserSchema = new Schema({
     type: {
         type: String,
         required: true,
-        // type is either lander or borrower
-        enum: {
-            values: ['lender', 'borrower'],
-            message: 'Type is either: lander or borrower'
-        },
+        enum: UserType,
     },
 });
 
