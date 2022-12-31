@@ -1,12 +1,8 @@
-import mongoose from "mongoose";
+import { connect, ConnectOptions } from "mongoose";
 
-export const connectDB = async (DATABASE_URL: string, DB_NAME: string) => {
+export const connectDB = async (DATABASE_URL: string, DB_OPTIONS: ConnectOptions) => {
     try {
-        const DB_OPTIONS = {
-            dbName: DB_NAME,
-        }
-
-        await mongoose.connect(DATABASE_URL, DB_OPTIONS);
+        await connect(DATABASE_URL, DB_OPTIONS);
         console.log("Connected Successfully..");
     }
     catch (err) {
