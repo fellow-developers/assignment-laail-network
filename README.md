@@ -62,7 +62,7 @@ open terminal and run the following commands
   
   ```text
   security:
-  authorization: enabled
+    authorization: enabled
   ```
 
 - Restart mongodb service
