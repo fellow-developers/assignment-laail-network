@@ -13,13 +13,29 @@ export const getUser = (req: Request, res: Response) => {
     res.json(`User: ${type}`);
 }
 
-export const createUser = (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
     console.log("Creating User");
 
-    const data = req.body;
-    console.log(data);
+    console.log("Request Body -> ", req.body);
+    const { name, mobile, type } = req.body;
 
-    // TODO: Add logic to create user in db and send it back
+    // Save the user in the db
+    try {
+        const doc = new UserModel({
+            name: name,
+            mobile: mobile,
+            type: type,
+        });
 
-    res.json('User Created');
+        const result = await doc.save();
+        console.log('Data Store in Db -> ', result);
+
+        res.status(201).json(result);
+    } catch (error) {
+        console.log(error);
+
+        // TODO: Pass only the validation errors and not the whole error object and also handle 500 error
+        res.status(400).json(error);
+    }
+
 }
