@@ -1,16 +1,25 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../models/users';
 
-export const getUser = (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response) => {
     console.log("Get User");
 
     const type = req.query.type;
-
-    // TODO: Add logic to get user from db depending on type and send it back
-    UserModel.find();
     console.log(type);
 
-    res.json(`User: ${type}`);
+    try {
+        // Retrieve user from db depending on type and send it back
+        const docs = await UserModel.find({ type: type });
+
+        console.log('Data from Db -> ', docs);
+
+        res.status(200).json({ results: docs });
+    } catch (error) {
+        console.log(error);
+
+        // TODO: Fix the error handling
+        res.status(404).json(error);
+    }
 }
 
 export const createUser = async (req: Request, res: Response) => {
@@ -19,8 +28,8 @@ export const createUser = async (req: Request, res: Response) => {
     console.log("Request Body -> ", req.body);
     const { name, mobile, type } = req.body;
 
-    // Save the user in the db
     try {
+        // Save the user in the db
         const doc = new UserModel({
             name: name,
             mobile: mobile,
