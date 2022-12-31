@@ -103,3 +103,74 @@ open terminal and run the following commands
   ```
 
 - Open browser and go to http://localhost:3000
+
+
+
+## API Documentation
+
+- User
+  
+  - Create User (lender or borrower)
+    
+    - Endpoint: `POST /api/users`
+
+    - Request Body:
+      ```json
+      {
+        "name": "user name",
+        "mobile": "1234567890",
+        "type": "user-type"
+      }
+      ```
+
+    - Note- type can be either "lender" or "borrower"
+
+    - Curl Command to test:
+      ```bash
+      curl -X POST 'http://127.0.0.1:3000/api/users' \
+      -H 'Content-Type: application/json' \
+      -d '{
+        "name": "user name",
+        "mobile": "1234567890",
+        "type": "lender"
+      }' | json_pp
+      ```
+
+  - Get User (lender or borrower)
+    
+    - Endpoint: `GET /api/users/?type=user-type`
+
+    - Response Body:
+      ```json
+      {
+        results: [
+          {
+            "name": "user name 1",
+            "mobile": "1234567890",
+            "type": "user-type"
+          },
+          {
+            "name": "user name 2",
+            "mobile": "1234567899",
+            "type": "user-type"
+          }
+        ]
+      }
+      ```
+
+    - Curl Command to test:
+      ```bash
+      curl 'http://127.0.0.1:3000/api/users/?type=lender' | json_pp
+      ```
+
+    - Note- type can be either "lender" or "borrower"
+
+- Contact
+
+  - Create Contact
+    
+    - Endpoint: `POST /api/contacts`
+
+  - Get Contact
+    
+    - Endpoint: `GET /api/contacts/:id`
