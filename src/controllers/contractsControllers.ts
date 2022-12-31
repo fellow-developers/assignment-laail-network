@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+// import { ContractModel } from '../models/contracts';
 
 export const getContracts = (req: Request, res: Response) => {
     console.log("Get Contracts");
@@ -6,6 +7,8 @@ export const getContracts = (req: Request, res: Response) => {
     const n = req.params.n;
 
     // TODO: Add logic to retrieve contracts from db depending on n and send it back 
+    // ContractModel.find();
+
     console.log(n);
 
     res.json(`Contracts: ${n}`);
