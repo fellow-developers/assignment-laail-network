@@ -128,6 +128,17 @@ open terminal and run the following commands
       }
       ```
 
+    - Response Body:
+      ```json
+      {
+        "name": "user name",
+        "mobile": "1234567890",
+        "type": "user-type",
+        "_id": "63b07d92d48b6edde9d02f5a",
+        "__v": 0
+      }
+      ```
+
     - Note- type can be either "lender" or "borrower"
 
     - Curl Command to test:
@@ -150,14 +161,18 @@ open terminal and run the following commands
       {
         results: [
           {
+            "_id": "63b0437c0604d588afaa34bd",
             "name": "user name 1",
             "mobile": "1234567890",
-            "type": "user-type"
+            "type": "user-type",
+            "__v": 0
           },
           {
+            "_id": "63b07d92d48b6edde9d02f5a",
             "name": "user name 2",
             "mobile": "1234567899",
-            "type": "user-type"
+            "type": "user-type",
+            "__v": 0
           }
         ]
       }
@@ -175,6 +190,54 @@ open terminal and run the following commands
   - Create Contact
     
     - Endpoint: `POST /api/contacts`
+
+    - Request Body:
+      ```json
+      {
+        "lenderId": "63b043650604d588afaa34bb",
+        "borrowerId": "63b0437c0604d588afaa34bd",
+        "principle": 10000,
+        "interest": 10
+      }
+      ```
+
+    - Response Body:
+      ```json
+      {
+        "lender": {
+          "_id": "63b043650604d588afaa34bb",
+          "name": "test user 1",
+          "mobile": "1234567890",
+          "type": "lender",
+          "__v": 0
+        },
+        "borrower": {
+          "_id": "63b0437c0604d588afaa34bd",
+          "name": "test user 2",
+          "mobile": "1234567890",
+          "type": "borrower",
+          "__v": 0
+        },
+        "principle": 10000,
+        "interest": 10,
+        "status": "active",
+        "_id": "63b079ef377e5100fda0fa95",
+        "createdAt": "2022-12-31T18:05:35.705Z",
+        "__v": 0
+      }
+      ```
+
+    - Curl Command to test:
+      ```bash
+      curl -X POST 'http://127.0.0.1:3000/api/contacts' \
+      -H 'Content-Type: application/json' \
+      -d '{
+        "lenderId": "63b043650604d588afaa34bb",
+        "borrowerId": "63b0437c0604d588afaa34bd",
+        "principle": 10000,
+        "interest": 10
+      }' | json_pp
+      ```
 
   - Get Contact
     
