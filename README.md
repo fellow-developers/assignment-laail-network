@@ -86,6 +86,11 @@ open terminal and run the following commands
 
 - Add environment variables in .env file
   ```text
+  # The port to listen on for HTTP requests.
+  PORT=3000
+
+  # Database
+  DATABASE_URL=mongodb://localhost:27017
   DATABASE_NAME=laaildb
   DATABASE_USER=developer
   DATABASE_PASSWORD=password
