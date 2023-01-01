@@ -239,21 +239,21 @@ open terminal and run the following commands
       }' | json_pp
       ```
 
-  - Get Lender Contacts
+  - Get Lender Loan Amount
     
-    - Endpoint: `GET /api/lenders/:id`
+    - Endpoint: `GET /api/lender-loan-amount/:id`
 
     - Response Body:
       ```json
       {
         "results": [
           {
-            "total": 110000,
-            "lenderName": "test user 1"
+            "lenderName": "test user 1",
+            "total": 110000
           },
           {
-            "total": 200000,
-            "lenderName": "test user 4"
+            "lenderName": "test user 4",
+            "total": 200000
           }
         ]
       }
@@ -261,5 +261,30 @@ open terminal and run the following commands
 
     - Curl Command to test:
       ```bash
-      curl 'http://127.0.0.1:3000/api/lenders/1' | json_pp
+      curl 'http://127.0.0.1:3000/api/lender-loan-amount/1' | json_pp
+      ```
+
+  - Get Lender Loan Count
+
+    - Endpoint: `GET /api/lender-loan-count/:id`
+
+    - Response Body:
+      ```json
+      {
+        "results" : [
+          {
+            "lenderName" : "test user 4",
+            "total" : 1
+          },
+          {
+            "lenderName" : "test user 1",
+            "total" : 2
+          }
+        ]
+      }
+      ```
+
+    - Curl Command to test:
+      ```bash
+      curl 'http://127.0.0.1:3000/api/lender-loan-count/1' | json_pp
       ```
