@@ -86,6 +86,12 @@ export const getLenderLoanCount = async (req: Request, res: Response) => {
             {
                 $unwind: "$lender"
             },
+            // Sort the results by the total field in ascending order
+            {
+                $sort: {
+                    total: 1
+                }
+            },
             // Project the final result fields
             {
                 $project: {
