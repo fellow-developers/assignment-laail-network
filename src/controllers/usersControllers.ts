@@ -17,8 +17,7 @@ export const getUser = async (req: Request, res: Response) => {
     } catch (error) {
         console.log(error);
 
-        // TODO: Fix the error handling
-        res.status(404).json(error);
+        res.status(500).json(error);
     }
 }
 
