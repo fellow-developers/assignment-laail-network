@@ -3,28 +3,67 @@ import { ContractModel, ContractStatus } from '../models/contracts';
 import { UserModel } from '../models/users';
 // import { ContractModel } from '../models/contracts';
 
-export const getContracts = (req: Request, res: Response) => {
+export const getContracts = async (req: Request, res: Response) => {
     console.log("Get Contracts");
 
     const n = req.params.n;
 
-    // TODO: Add logic to retrieve contracts from db depending on n and send it back 
-    // ContractModel.find();
+    // find all lenders who have given loans to at least n borrowers and the total amount of loans given by them
+    try {
+        const lenders = await ContractModel.aggregate([
+            // Group the contracts by lender
+            {
+                $group: {
+                    _id: "$lender",
+                    count: { $sum: 1 }, // Count the number of contracts
+                    total: { $sum: "$principle" } // Sum the principle field
+                }
+            },
+            // Only include lenders who have given loans to at least n borrowers
+            {
+                $match: {
+                    count: { $gte: parseInt(n) },
+                }
+            },
+            // Perform a left outer join to the User collection
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "lender"
+                }
+            },
+            // Unwind the lender array
+            {
+                $unwind: "$lender"
+            },
+            // Project the final result fields
+            {
+                $project: {
+                    _id: 0, // Exclude the _id field
+                    lenderName: "$lender.name", // Include the lender's name
+                    total: 1 // Include the totalAmount field
+                }
+            }
+        ]);
 
-    console.log(n);
 
-    res.json(`Contracts: ${n}`);
+        console.log('Lenders -> ', lenders);
+
+        res.status(200).json({ results: lenders });
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json(error);
+    }
 }
-
 
 export const createContracts = async (req: Request, res: Response) => {
     console.log("Creating Contracts");
 
     console.log("Request Body -> ", req.body);
     const { lenderId, borrowerId, principle, interest } = req.body;
-
-
-    // TODO: Add logic to create contracts in db and send it back
 
     try {
         // Retrieve lender and borrower from db
