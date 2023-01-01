@@ -3,8 +3,8 @@ import { ContractModel, ContractStatus } from '../models/contracts';
 import { UserModel } from '../models/users';
 // import { ContractModel } from '../models/contracts';
 
-export const getNLenders = async (req: Request, res: Response) => {
-    console.log("Get Contracts");
+export const getLenderLoanAmount = async (req: Request, res: Response) => {
+    console.log("Get Lender Loan Amount");
 
     const n = req.params.n;
 
@@ -43,11 +43,64 @@ export const getNLenders = async (req: Request, res: Response) => {
                 $project: {
                     _id: 0, // Exclude the _id field
                     lenderName: "$lender.name", // Include the lender's name
-                    total: 1 // Include the totalAmount field
+                    total: 1 // Include the total field
                 }
             }
         ]);
 
+        console.log('Lenders -> ', lenders);
+
+        res.status(200).json({ results: lenders });
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json(error);
+    }
+}
+
+export const getLenderLoanCount = async (req: Request, res: Response) => {
+    console.log("Get Lender Loan Count");
+
+    const n = req.params.n;
+
+    // find all lenders who have given loans in ascending order
+    try {
+        const lenders = await ContractModel.aggregate([
+            // Group the contracts by lender
+            {
+                $group: {
+                    _id: "$lender",
+                    total: { $sum: 1 }, // Count the number of contracts
+                }
+            },
+            // Perform a left outer join to the User collection
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "lender"
+                }
+            },
+            // Unwind the lender array
+            {
+                $unwind: "$lender"
+            },
+            // Sort the results by the total field in ascending order
+            {
+                $sort: {
+                    total: 1
+                }
+            },
+            // Project the final result fields
+            {
+                $project: {
+                    _id: 0, // Exclude the _id field
+                    lenderName: "$lender.name", // Include the lender's name
+                    total: 1 // Include the total field
+                }
+            }
+        ]);
 
         console.log('Lenders -> ', lenders);
 
