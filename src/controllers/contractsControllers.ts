@@ -3,7 +3,7 @@ import { ContractModel, ContractStatus } from '../models/contracts';
 import { UserModel } from '../models/users';
 // import { ContractModel } from '../models/contracts';
 
-export const getContracts = async (req: Request, res: Response) => {
+export const getNLenders = async (req: Request, res: Response) => {
     console.log("Get Contracts");
 
     const n = req.params.n;

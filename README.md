@@ -239,6 +239,27 @@ open terminal and run the following commands
       }' | json_pp
       ```
 
-  - Get Contact
+  - Get Lender Contacts
     
-    - Endpoint: `GET /api/contacts/:id`
+    - Endpoint: `GET /api/lenders/:id`
+
+    - Response Body:
+      ```json
+      {
+        "results": [
+          {
+            "total": 110000,
+            "lenderName": "test user 1"
+          },
+          {
+            "total": 200000,
+            "lenderName": "test user 4"
+          }
+        ]
+      }
+      ```
+
+    - Curl Command to test:
+      ```bash
+      curl 'http://127.0.0.1:3000/api/lenders/1' | json_pp
+      ```
